@@ -7,16 +7,45 @@ import java.sql.ResultSet;
 import br.com.projeto.beans.Usuario;
 import br.com.projeto.conexao.Conexao;
 
+/**
+ * Esta classe é responsavel por realizar o CRUD 
+ * na tabela RW_T_USUARIO, onde NM_USUARIO e CD_USUARIO 
+ * são colunas obrigatórias. 
+ * 
+ * @author João Pedro
+ * @see br.com.projeto.beans.Usuario
+ * @see br.com.projeto.bo.UsuarioBO 
+ * @version 1.0 
+ * @since 0.1
+ * 
+ *
+ */
+
 public class UsuarioDAO { 
 	
 	private Connection con; 
 	private PreparedStatement stmt; 
 	private ResultSet rs; 
 	
+	/**
+	 * O método construtor é responsavel por abrir a conexão
+	 * @throws Exception 
+	 * @author João 
+	 * @version 1.0
+	 */
 	public UsuarioDAO() throws Exception{
 		con = Conexao.queroConectar();
 	}
-
+	
+	/**
+	 * Neste método, por meio da chave primária,
+	 * será retornado um objeto Usuario vazio ou preenchido.
+	 * @param codigo
+	 * @return retorna um objeto vazio e preeenchido
+	 * @throws Exception 
+	 * @author Gabriel 
+	 * @version 1.0
+	 */
 	public Usuario getUser(int codigo) throws Exception {
 		stmt = con.prepareStatement
 				("select * from RW_T_USUARIO where CD_USUARIO=?");
@@ -32,6 +61,7 @@ public class UsuarioDAO {
 			return new Usuario();
 		}
 	} 
+	
 	public int deletarUser(int codigo) throws Exception {
 		stmt = con.prepareStatement
 				("delete from RW_T_USUARIO where CD_USUARIO=?"); 
