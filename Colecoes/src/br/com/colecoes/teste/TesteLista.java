@@ -21,7 +21,8 @@ public class TesteLista {
 			System.out.println(objeto.getNome()); 
 			System.out.println(objeto.getNivel()); 
 			System.out.println(objeto.getSalario());
-		}
+		} 
+		System.out.println(lista.get(2));
 	}
 
 }

@@ -3,6 +3,8 @@ package br.com.projeto.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.projeto.beans.Assinatura;
 import br.com.projeto.beans.Usuario;
@@ -59,7 +61,31 @@ public class AssinaturaDAO {
 		} else {
 			return new Assinatura();
 		}
+	} 
+	
+	public List<Assinatura> getAssinaturaValor(double valor) throws Exception {
+		List<Assinatura> lista = new ArrayList<Assinatura>();
+		stmt = con.prepareStatement
+				("SELECT * FROM RW_T_ASSINATURA INNER JOIN RW_T_USUARIO "
+						+ "ON RW_T_ASSINATURA.CD_USUARIO=RW_T_ASSINATURA.CD_USUARIO "
+						+ "WHERE VL_ASSINATURA > ?"); 
+		stmt.setDouble(1, valor); 
+		rs = stmt.executeQuery(); 
+		while(rs.next()) {
+			lista.add(new Assinatura(
+					rs.getInt("CD_ASSINATURA"), 
+					rs.getString("TP_ASSINATURA"), 
+					rs.getDouble("VL_ASSINATURA"), 
+					rs.getString("DT_ASSINATURA"), 
+					new Usuario(
+							rs.getInt("CD_USUARIO"), 
+							rs.getString("NM_USUARIO"), 
+							rs.getString("PW_SENHA")
+							)));
+		} 
+		return lista;
 	}
+	
 	public int addAssinatura(Assinatura a) throws Exception {
 		stmt = con.prepareStatement("INSERT INTO RW_T_ASSINATURA"
 				+ "(CD_ASSINATURA, "

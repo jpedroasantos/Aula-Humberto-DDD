@@ -1,12 +1,21 @@
 package br.com.projeto.bo;
 
+import java.util.List;
+
 import br.com.projeto.beans.Usuario;
 import br.com.projeto.dao.AssinaturaDAO;
 import br.com.projeto.dao.UsuarioDAO;
 
 public class UsuarioBO {
 	
-	public int novoUsuario(Usuario objUsuario) throws Exception{
+	public static List<Usuario> perquisarPorNome(String nome) throws Exception {
+		UsuarioDAO dao = new UsuarioDAO(); 
+		List<Usuario> lista = dao.getUserName(nome); 
+		dao.encerrar();
+		return lista;
+	}
+	
+	public static int novoUsuario(Usuario objUsuario) throws Exception{
 		if(objUsuario.getNome().length() > 50) {
 			throw new RuntimeException("Excedeu caracteres");
 		} 

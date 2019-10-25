@@ -3,6 +3,8 @@ package br.com.projeto.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.projeto.beans.Usuario;
 import br.com.projeto.conexao.Conexao;
@@ -60,7 +62,23 @@ public class UsuarioDAO {
 		} else {
 			return new Usuario();
 		}
-	} 
+	}  
+	
+	public List<Usuario> getUserName(String nome) throws Exception {
+		List<Usuario> lista = new ArrayList<Usuario>();
+		stmt = con.prepareStatement
+				("SELECT * FROM RW_T_USUARIO WHERE NM_USUARIO LIKE ?");
+		stmt.setString(1 ,"%" + nome + "%"); 
+		rs = stmt.executeQuery(); 
+		while(rs.next()) {
+			lista.add(new Usuario (
+					rs.getInt("CD_USUARIO"), 
+					rs.getString("NM_USUARIO"), 
+					rs.getString("PW_USUARIO")
+					)); 
+		} 
+		return lista;
+	}
 	
 	public int deletarUser(int codigo) throws Exception {
 		stmt = con.prepareStatement

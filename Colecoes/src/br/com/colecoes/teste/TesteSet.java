@@ -13,7 +13,7 @@ public class TesteSet {
 		lista.add("Analista"); 
 		
 		System.out.println(lista);
-
+		
 	}
 
 }
